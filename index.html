@@ -1,0 +1,216 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONNECT U | Student Community</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+
+    <!-- LOGIN -->
+    <section class="auth-screen" id="loginScreen">
+        <div class="auth-card">
+            <div class="brand-mark">C</div>
+            <h1>CONNECT <span>U</span></h1>
+            <p id="authDescription">Welcome back. Sign in to continue.</p>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="loginTab">Login</button>
+                <button class="auth-tab" id="registerTab">Register</button>
+            </div>
+
+            <form id="authForm">
+                <label for="usernameInput">Username</label>
+                <input id="usernameInput" type="text"
+                    placeholder="Your username" required maxlength="20"
+                    autocomplete="username">
+
+                <label for="passwordInput">Password</label>
+                <input id="passwordInput" type="password"
+                    placeholder="Your password" required
+                    autocomplete="current-password">
+
+                <div id="confirmPasswordField" hidden>
+                    <label for="confirmPasswordInput">Confirm password</label>
+                    <input id="confirmPasswordInput" type="password"
+                        placeholder="Repeat your password">
+                </div>
+
+                <p class="auth-error" id="loginError"></p>
+
+                <button class="primary-button" id="authSubmit" type="submit">
+                    Login
+                </button>
+            </form>
+
+            <p class="auth-footer">Your student community starts here.</p>
+        </div>
+    </section>
+
+    <!-- MAIN APPLICATION -->
+    <main class="app" id="app" hidden>
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-brand">
+                <div class="small-logo">C</div>
+                <div>
+                    <h2>CONNECT U</h2>
+                    <p>Student community</p>
+                </div>
+                <button class="icon-button close-sidebar" id="closeSidebar">×</button>
+            </div>
+
+            <!-- PROFILE BAR -->
+            <div class="profile-bar">
+                <button class="profile-avatar-button" id="profileAvatarButton">
+                    <div class="profile-avatar" id="myAvatar">U</div>
+                    <span class="avatar-online"></span>
+                </button>
+
+                <button class="profile-information" id="openProfile">
+                    <strong id="myDisplayName">Student</strong>
+                    <span id="myUsername">@student</span>
+                    <small id="myBio">Available to connect</small>
+                </button>
+
+                <button class="profile-menu-button" id="openProfileMenu">
+                    ⋯
+                </button>
+            </div>
+
+            <div class="profile-dropdown" id="profileDropdown" hidden>
+                <button id="editProfileButton">Edit profile</button>
+                <button id="logoutButton" class="logout-option">Sign out</button>
+            </div>
+
+            <div class="sidebar-heading">
+                <span>MESSAGES</span>
+                <span id="onlineCount">0 online</span>
+            </div>
+
+            <button class="user-item active" id="groupButton">
+                <div class="user-avatar group-avatar">#</div>
+                <div class="user-details">
+                    <strong>Student Lounge</strong>
+                    <small>Everyone</small>
+                </div>
+            </button>
+
+            <div class="sidebar-heading">STUDENTS</div>
+            <div class="users-list" id="usersList"></div>
+
+            <div class="sidebar-bottom">
+                <span>CONNECT U</span>
+                <small>Student communication platform</small>
+            </div>
+        </aside>
+
+        <!-- CHAT PANEL -->
+        <section class="chat-panel">
+
+            <header class="chat-header">
+                <button class="icon-button menu-button" id="openSidebar">☰</button>
+
+                <div class="chat-heading-icon" id="headerChatIcon">#</div>
+
+                <div class="chat-heading">
+                    <h2 id="chatTitle">Student Lounge</h2>
+                    <p id="chatSubtitle">Connect with everyone</p>
+                </div>
+
+                <div class="connection-status">
+                    <i class="connection-dot" id="connectionDot"></i>
+                    <span id="connectionText">Connecting</span>
+                </div>
+            </header>
+
+            <div class="messages-area" id="messagesArea">
+                <div class="messages-list" id="messagesList"></div>
+            </div>
+
+            <div class="typing-status" id="typingStatus"></div>
+
+            <form class="message-form" id="messageForm">
+                <input id="messageInput" type="text"
+                    placeholder="Write a message..." maxlength="2000"
+                    autocomplete="off">
+                <button class="send-button" type="submit">Send</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- EDIT PROFILE -->
+    <div class="modal-overlay" id="profileModal" hidden>
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2>Edit profile</h2>
+                <button class="modal-close" id="closeProfile">×</button>
+            </div>
+
+            <div class="edit-avatar" id="editAvatar">U</div>
+
+            <label for="displayNameInput">Display name</label>
+            <input id="displayNameInput" maxlength="30"
+                placeholder="Your display name">
+
+            <label for="bioInput">About me</label>
+            <textarea id="bioInput" maxlength="100"
+                placeholder="Write a short description..." rows="3"></textarea>
+
+            <p class="auth-error" id="profileError"></p>
+
+            <button class="primary-button" id="saveProfile">
+                Save changes
+            </button>
+        </div>
+    </div>
+
+    <!-- INCOMING CALL -->
+    <div class="call-notice" id="incomingCall" hidden>
+        <div class="call-notice-card">
+            <div class="call-avatar" id="incomingAvatar">U</div>
+            <h2 id="incomingCaller">Student</h2>
+            <p id="incomingCallType">Incoming call</p>
+
+            <div class="call-actions">
+                <button class="decline-button" id="declineCall">Decline</button>
+                <button class="accept-button" id="acceptCall">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ACTIVE CALL -->
+    <section class="call-screen" id="callScreen" hidden>
+        <div class="call-topbar">
+            <div>
+                <h2 id="callPerson">Calling...</h2>
+                <p id="callStatus">Connecting</p>
+            </div>
+            <span class="call-live-indicator">● LIVE CALL</span>
+        </div>
+
+        <div class="video-stage">
+            <video id="remoteVideo" autoplay playsinline></video>
+
+            <div class="remote-placeholder" id="remotePlaceholder">
+                <div class="call-avatar">U</div>
+                <p>Waiting for video...</p>
+            </div>
+
+            <video id="localVideo" autoplay muted playsinline></video>
+        </div>
+
+        <div class="call-controls">
+            <button id="muteButton" class="call-control">Mute</button>
+            <button id="cameraButton" class="call-control">Camera off</button>
+            <button id="endCallButton" class="end-call-button">End call</button>
+        </div>
+    </section>
+
+</body>
+</html>
